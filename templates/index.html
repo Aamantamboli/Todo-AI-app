@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI To-Do App</title>
+</head>
+<body>
+    <h1>📝 AI To-Do List</h1>
+
+    <form method="POST">
+        <input type="text" name="task" placeholder="Enter a task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <strong>{{ task.content }}</strong>
+            - <em>{{ task.sentiment }}</em>
+            {% if not task.completed %}
+                <a href="/complete/{{ loop.index0 }}">✅ Complete</a>
+            {% else %}
+                <span style="color:green;">[Done]</span>
+            {% endif %}
+            <a href="/delete/{{ loop.index0 }}">🗑 Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
