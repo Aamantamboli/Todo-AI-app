@@ -1,12 +1,9 @@
 from flask import Flask, render_template, request, redirect
-from transformers import pipeline
+from textblob import TextBlob
 
 app = Flask(__name__)
 
-# Sentiment analysis pipeline
-sentiment_analyzer = pipeline("sentiment-analysis")
-
-# In-memory to-do list (for now)
+# In-memory task list
 tasks = []
 
 @app.route("/", methods=["GET", "POST"])
@@ -14,14 +11,15 @@ def index():
     if request.method == "POST":
         content = request.form.get("task")
         if content:
-            sentiment = sentiment_analyzer(content)[0]  # {'label': 'POSITIVE', 'score': 0.99}
+            blob = TextBlob(content)
+            polarity = blob.sentiment.polarity
+            sentiment = "Positive" if polarity > 0 else "Negative" if polarity < 0 else "Neutral"
             tasks.append({
                 "content": content,
                 "completed": False,
-                "sentiment": sentiment["label"]
+                "sentiment": sentiment
             })
         return redirect("/")
-
     return render_template("index.html", tasks=tasks)
 
 @app.route("/complete/<int:task_id>")
@@ -37,5 +35,4 @@ def delete(task_id):
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
-
+    app.run(host="0.0.0.0", port=5000)

@@ -1,3 +1,2 @@
 Flask
-transformers
-torch
+textblob
