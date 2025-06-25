@@ -155,7 +155,7 @@ Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username.
 
 -----
 
-### Step 3: Set up AWS EC2 Instance for Application Deployment (Same as before)
+### Step 3: Set up AWS EC2 Instance for Application Deployment 
 
 This EC2 instance will run your Dockerized Flask application.
 
