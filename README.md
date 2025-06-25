@@ -2,7 +2,7 @@
 
 **Goal:** Create a CI/CD pipeline using Jenkins to automatically build a Flask web application, containerize it with Docker, push the Docker image to Docker Hub, and then deploy it to an AWS EC2 instance whenever changes are pushed to the GitHub repository.
 
-![CI/CD Architecture Diagram](Images/CI_CD%20Architecture%20Diagram.png)
+![CI/CD Architecture Diagram](images/ci-cd-architecture-daigram.png)
 
 **Technologies Used:**
 
@@ -254,7 +254,7 @@ sudo systemctl status jenkins # Check status
   * Create an admin user (username and password).
   * You can set the Jenkins URL (usually the public IP/DNS), then click **"Save and Finish"**.
   * Click **"Start using Jenkins"**.
-![Jenkins Unlock Screen](Images/jenkins-unlock.png)
+![Jenkins Unlock Screen](images/jenkins-unlock.png)
 -----
 
 ### Step 5: Configure Jenkins Credentials
@@ -282,6 +282,7 @@ From the Jenkins dashboard:
   * **ID:** `dockerhub-credentials` (This ID is important; we'll use it in the `Jenkinsfile`).
   * **Description:** `Docker Hub credentials`
   * Click **"Create"**.
+  ![Add Docker Hub Credentials Jenkins](images/jenkins-dockerhub-credentials.png) 
 
 **3. Add GitHub Credentials (for Repository Checkout):**
 If your GitHub repository is **public**, Jenkins can clone it without credentials. However, if it's private, or if you prefer explicit credentials:
@@ -446,6 +447,8 @@ git push origin main
       * **Branches to build:** `*/main` (or `*/master` if your default branch is `master`).
       * **Script Path:** `Jenkinsfile` (This is the default, so if you named your file `Jenkinsfile`, you're good).
   * Click **"Save"**.
+  ![Jenkins Job Configuration General](images/jenkins-job-config-general.png)
+  ![Jenkins Job Configuration Pipeline](images/jenkins-job-config-pipeline.png)
 
 -----
 
@@ -461,6 +464,7 @@ For automatic builds on every push, GitHub needs to tell Jenkins.
 6.  **"Which events would you like to trigger this webhook?"**: Select **"Just the push event"**.
 7.  Ensure **"Active"** is checked.
 8.  Click **"Add webhook"**.
+   ![GitHub Webhook Configuration](images/github-webhook-config.png)
 
 **Important:** Ensure your Jenkins EC2 instance's security group allows inbound traffic on port `8080` from `Anywhere` (0.0.0.0/0) for GitHub to reach it.
 
@@ -474,6 +478,8 @@ For automatic builds on every push, GitHub needs to tell Jenkins.
   * Click on your `Flask-App-CI-CD` job.
   * Click **"Build Now"** in the left menu.
   * Monitor the build in the "Build History" panel (click on the build number, then "Console Output" to see logs).
+    ![Jenkins Build History Success](images/jenkins-build-history.png)
+    ![Jenkins Console Output Example](images/jenkins-console-output.png)
 
 **2. Automatic Trigger (After Webhook Setup):**
 
@@ -499,32 +505,6 @@ Once the Jenkins pipeline completes successfully, open your web browser and navi
 
 `http://YOUR_EC2_APP_SERVER_PUBLIC_IP_OR_DNS`
 
-You should see the updated message: "Hello from Flask App\! Version 2.0 (Updated via Jenkins CI/CD)\!"
-
+You should see the updated Version
+![Deployed Flask App Screenshot](images/deployed-flask-app.png)
 -----
-
-## What You've Achieved and LinkedIn Showcase
-
-You've successfully implemented an end-to-end CI/CD pipeline using Jenkins, a cornerstone of many DevOps environments.
-
-**You've demonstrated proficiency in:**
-
-  * **Jenkins Setup & Administration:** Installing Jenkins, managing plugins, configuring jobs and credentials.
-  * **Jenkins Pipelines (Jenkinsfile):** Writing Groovy scripts to define multi-stage CI/CD workflows.
-  * **Credential Management:** Securely handling Docker Hub and SSH keys within Jenkins.
-  * **Version Control Integration:** Connecting Jenkins to GitHub via webhooks for automated builds.
-  * **Docker Integration:** Building, tagging, and pushing Docker images from Jenkins.
-  * **Remote Deployment:** Using SSH to deploy containerized applications to a remote EC2 instance.
-  * **Cloud Platform (AWS):** Utilizing EC2 instances for both the Jenkins server and the application deployment target.
-  * **Scripting:** Employing Bash commands within the Jenkins pipeline for deployment logic.
-
-**For your LinkedIn Profile:**
-
-This project is a strong asset\! Use similar descriptive language as before, but emphasize Jenkins.
-
-  * **Project Title:** End-to-End CI/CD Pipeline for Web App using Jenkins, Docker, and AWS
-  * **Description:** "Designed and implemented a robust CI/CD pipeline leveraging Jenkins for continuous integration and delivery of a Python Flask web application. Orchestrated automated Docker image builds, pushes to Docker Hub, and seamless deployments to an AWS EC2 instance. Gained extensive hands-on experience with Jenkins Pipeline scripting, secure credential management, GitHub webhook integration, and remote server automation via SSH. This project significantly improved deployment efficiency and reliability from code commit to production."
-  * **Links:** Link to your GitHub repository (with a clear `README.md` explaining the Jenkins setup, `Jenkinsfile` steps, etc.). Include screenshots of your Jenkins pipeline stages, Docker Hub image, and the deployed application.
-  * **Skills:** Jenkins, Jenkins Pipeline, Groovy Scripting, Docker, Docker Hub, AWS EC2, CI/CD, Git, GitHub, SSH, Linux, Python, Automation.
-
-This Jenkins-based project is highly valuable for demonstrating your practical DevOps skills to employers\!
