@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         // Docker Hub credentials stored in Jenkins
-        DOCKER_HUB_USERNAME = credentials('dockerhub-credentials').username
-        DOCKER_HUB_PASSWORD = credentials('dockerhub-credentials').password
+          DOCKER_CREDENTIALS = credentials('dockerhub-credentials')
 
         // EC2 deployment details
         EC2_HOST = '13.204.85.165' // Replace with your EC2 server IP or DNS
