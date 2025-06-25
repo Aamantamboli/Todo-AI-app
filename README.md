@@ -1,9 +1,3 @@
-You absolutely can\! Jenkins is a fantastic choice for a robust CI/CD pipeline, offering immense flexibility and a vast plugin ecosystem. The core application and Docker setup will remain the same, but we'll swap GitHub Actions for a Jenkins server and a `Jenkinsfile` (Pipeline script).
-
-Here's the revised project, "Automated Web Application Deployment with CI/CD (End-to-End) using Jenkins":
-
------
-
 ## Project: Automated Web Application Deployment with CI/CD (End-to-End) using Jenkins
 
 **Goal:** Create a CI/CD pipeline using Jenkins to automatically build a Flask web application, containerize it with Docker, push the Docker image to Docker Hub, and then deploy it to an AWS EC2 instance whenever changes are pushed to the GitHub repository.
@@ -511,22 +505,12 @@ For automatic builds on every push, GitHub needs to tell Jenkins.
   * Make a small change to your `app.py` locally.
   * Commit and push it to your GitHub `main` branch.
     ```bash
-    # app.py
-    from flask import Flask
-
+    # Trigger Jenkins build automatically via GitHub webhook
+    from flask import Flask, render_template, request, redirect
+    from textblob import TextBlob
     app = Flask(__name__)
-
-    @app.route('/')
-    def hello():
-        return "Hello from Flask App! Version 2.0 (Updated via Jenkins CI/CD)!" # Changed line
-
-    @app.route('/health')
-    def health_check():
-        return "OK", 200
-
-    if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=5000)
     ```
+    
     ```bash
     git add app.py
     git commit -m "Update Flask app to version 2.0 (Jenkins)"
