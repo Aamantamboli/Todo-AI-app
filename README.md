@@ -8,7 +8,7 @@ Here's the revised project, "Automated Web Application Deployment with CI/CD (En
 
 **Goal:** Create a CI/CD pipeline using Jenkins to automatically build a Flask web application, containerize it with Docker, push the Docker image to Docker Hub, and then deploy it to an AWS EC2 instance whenever changes are pushed to the GitHub repository.
 
-![CI/CD Architecture Diagram](Images/CI_CD Architecture Diagram.png)
+![CI/CD Architecture Diagram](Images/CI_CD%20Architecture%20Diagram.png)
 
 **Technologies Used:**
 
