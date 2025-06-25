@@ -62,7 +62,7 @@ pipeline {
                             sudo docker pull ${DOCKER_HUB_USERNAME}/${APP_NAME}:latest
 
                             echo "Running new Docker container..."
-                            sudo docker run -d --name ${APP_NAME}-container -p 80:5000 ${DOCKER_HUB_USERNAME}/${APP_NAME}:latest
+                            sudo docker run -d --name ${APP_NAME}-container -p 5000:5000 ${DOCKER_HUB_USERNAME}/${APP_NAME}:latest
 
                             echo "Deployment complete!"
                             echo "--- Deployment finished on EC2 ---"
