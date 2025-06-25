@@ -239,7 +239,7 @@ sudo systemctl status jenkins # Check status
   * Create an admin user (username and password).
   * You can set the Jenkins URL (usually the public IP/DNS), then click **"Save and Finish"**.
   * Click **"Start using Jenkins"**.
-
+![Jenkins Unlock Screen](Images/jenkins-unlock.png)
 -----
 
 ### Step 5: Configure Jenkins Credentials
