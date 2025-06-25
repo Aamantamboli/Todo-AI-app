@@ -1,11 +1,14 @@
 pipeline {
-    agent any
+    agent any // Use any available Jenkins agent/node
 
     environment {
-        DOCKER_CREDENTIALS = credentials('dockerhub-credentials')
+        // Docker Hub credentials stored in Jenkins
+        DOCKER_HUB_USERNAME = credentials('dockerhub-credentials').username
+        DOCKER_HUB_PASSWORD = credentials('dockerhub-credentials').password
 
-        EC2_HOST = '13.204.85.165'
-        EC2_USER = 'ubuntu'
+        // EC2 deployment details
+        EC2_HOST = '13.204.85.165' // Replace with your EC2 server IP or DNS
+        EC2_USER = 'ubuntu' // Or 'ec2-user' for Amazon Linux
         APP_NAME = 'flask-app'
     }
 
@@ -21,8 +24,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 script {
-                    docker.build("${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:${env.BUILD_NUMBER}", ".")
-                    docker.tag("${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:${env.BUILD_NUMBER}", "${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:latest")
+                    docker.build("${DOCKER_HUB_USERNAME}/${APP_NAME}:latest", ".")
                 }
             }
         }
@@ -32,8 +34,7 @@ pipeline {
                 echo 'Pushing Docker image to Docker Hub...'
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                        docker.image("${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:${env.BUILD_NUMBER}").push()
-                        docker.image("${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:latest").push()
+                        docker.image("${DOCKER_HUB_USERNAME}/${APP_NAME}:latest").push()
                     }
                 }
             }
@@ -46,6 +47,7 @@ pipeline {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
                             echo "--- Starting deployment on EC2 ---"
+
                             sudo systemctl start docker
 
                             if sudo docker ps -a | grep ${APP_NAME}-container; then
@@ -54,15 +56,15 @@ pipeline {
                                 sudo docker rm ${APP_NAME}-container
                             fi
 
-                            echo "${env.DOCKER_CREDENTIALS_PSW}" | sudo docker login --username ${env.DOCKER_CREDENTIALS_USR} --password-stdin
+                            echo "${DOCKER_HUB_PASSWORD}" | sudo docker login --username ${DOCKER_HUB_USERNAME} --password-stdin
 
-                            sudo docker pull ${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:latest
+                            echo "Pulling latest Docker image: ${DOCKER_HUB_USERNAME}/${APP_NAME}:latest"
+                            sudo docker pull ${DOCKER_HUB_USERNAME}/${APP_NAME}:latest
 
-                            sudo docker run -d \
-                              --name ${APP_NAME}-container \
-                              -p 80:5000 \
-                              ${env.DOCKER_CREDENTIALS_USR}/${APP_NAME}:latest
+                            echo "Running new Docker container..."
+                            sudo docker run -d --name ${APP_NAME}-container -p 80:5000 ${DOCKER_HUB_USERNAME}/${APP_NAME}:latest
 
+                            echo "Deployment complete!"
                             echo "--- Deployment finished on EC2 ---"
                             exit
                         EOF
