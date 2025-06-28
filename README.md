@@ -22,8 +22,8 @@ This part remains identical. If you already did this, great\! If not, follow the
 **1. Create Project Directory:**
 
 ```bash
-mkdir flask-ci-cd-project-jenkins
-cd flask-ci-cd-project-jenkins
+mkdir Todo-AI-app
+cd Todo-AI-app
 ```
 
 **2. Create `app.py` (Flask Application):**
