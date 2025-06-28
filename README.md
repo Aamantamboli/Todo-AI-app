@@ -15,7 +15,7 @@
 
 -----
 
-### Step 1: Set up the Flask Web Application (Same as before)
+### Step 1: Set up the Flask Web Application 
 
 This part remains identical. If you already did this, great\! If not, follow these steps:
 
@@ -115,7 +115,7 @@ __pycache__/
 
 -----
 
-### Step 2: Initialize Git and Push to GitHub (Same as before)
+### Step 2: Initialize Git and Push to GitHub
 
 Follow these steps:
 
