@@ -147,7 +147,7 @@ Now, go to GitHub, create a **new public repository** (e.g., `Todo-AI-app`). Do 
 Then, link your local repository to the remote one and push:
 
 ```bash
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/flask-ci-cd-project-jenkins.git
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/Todo-AI-app.git
 git branch -M main
 git push -u origin main
 ```
