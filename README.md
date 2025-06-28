@@ -142,7 +142,7 @@ git add .
 git commit -m "Initial commit: Flask app and Dockerfile"
 ```
 
-Now, go to GitHub, create a **new public repository** (e.g., `flask-ci-cd-project-jenkins`). Do **not** initialize with a README or license.
+Now, go to GitHub, create a **new public repository** (e.g., `Todo-AI-app`). Do **not** initialize with a README or license.
 
 Then, link your local repository to the remote one and push:
 
